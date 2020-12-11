@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+
+import java.util.concurrent.TimeUnit;
 public class BackgroundTask extends AsyncTask<String, Void, Void> {
     Socket s;
     DataOutputStream dos;
@@ -21,9 +23,10 @@ public class BackgroundTask extends AsyncTask<String, Void, Void> {
             dos = new DataOutputStream(s.getOutputStream());
             System.out.println("Se ha enviado info");
             dos.writeUTF(message);
+            TimeUnit.MILLISECONDS.sleep(100);
             dos.writeUTF(message2);
             dos.close();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
